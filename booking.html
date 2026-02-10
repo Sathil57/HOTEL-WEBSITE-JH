@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Stay - Sathil Hotel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#D4AF37',
+                            500: '#C5A028',
+                            600: '#B08D1E',
+                        },
+                        dark: {
+                            900: '#0F172A',
+                            800: '#1E293B',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Poppins"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-dark-900 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="text-3xl font-serif font-bold text-white tracking-wider">SATHIL</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-white hover:text-gold-400 transition-colors font-medium">Home</a>
+                    <a href="rooms.html" class="text-white hover:text-gold-400 transition-colors font-medium">Rooms</a>
+                    <a href="dining.html"
+                        class="text-white hover:text-gold-400 transition-colors font-medium">Dining</a>
+                    <a href="contact.html"
+                        class="text-white hover:text-gold-400 transition-colors font-medium">Contact</a>
+                    <a href="booking.html" class="text-gold-400 transition-colors font-medium">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-dark-900 py-32 text-center text-white">
+        <h1 class="text-4xl md:text-5xl font-serif font-bold mb-4">Book Your Escape</h1>
+        <p class="text-gold-400 text-lg">We look forward to welcoming you</p>
+    </header>
+
+    <!-- Booking Form Section -->
+    <section class="max-w-4xl mx-auto px-4 -mt-16 mb-24 relative z-10">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+            <form id="booking-form" class="space-y-8">
+                <!-- FormSubmit Configuration -->
+                <input type="hidden" name="_subject" value="New Hotel Reservation Request">
+                <input type="hidden" name="_captcha" value="false">
+
+                <!-- Personal Details -->
+                <div class="border-b border-gray-200 pb-8">
+                    <h3 class="text-xl font-bold text-dark-900 mb-6 flex items-center">
+                        <span
+                            class="w-8 h-8 rounded-full bg-gold-100 text-gold-600 flex items-center justify-center mr-3 text-sm">1</span>
+                        Personal Information
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                            <input type="text" name="name" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent outline-none transition-shadow"
+                                placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" name="email" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent outline-none transition-shadow"
+                                placeholder="john@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" name="phone" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent outline-none transition-shadow"
+                                placeholder="+94 77 123 4567">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stay Details -->
+                <div class="pb-8">
+                    <h3 class="text-xl font-bold text-dark-900 mb-6 flex items-center">
+                        <span
+                            class="w-8 h-8 rounded-full bg-gold-100 text-gold-600 flex items-center justify-center mr-3 text-sm">2</span>
+                        Stay Details
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Check-in Date</label>
+                            <input type="date" name="checkin" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent outline-none transition-shadow">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Check-out Date</label>
+                            <input type="date" name="checkout" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent outline-none transition-shadow">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Room Type</label>
+                            <select name="room"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent outline-none transition-shadow bg-white">
+                                <option value="deluxe">Deluxe Room ($150)</option>
+                                <option value="super-deluxe">Super Deluxe ($250)</option>
+                                <option value="suite">Presidential Suite ($450)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Guests</label>
+                            <select name="guests"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent outline-none transition-shadow bg-white">
+                                <option value="1">1 Adult</option>
+                                <option value="2">2 Adults</option>
+                                <option value="3">3 Adults</option>
+                                <option value="family">2 Adults + 2 Children</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-gold-500 hover:bg-gold-600 text-white font-bold py-4 rounded-lg shadow-lg transform transition hover:-translate-y-1 hover:shadow-xl">
+                    Confirm Booking
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 text-white py-8 text-center text-sm">
+        &copy; 2024 Sathil Hotel.
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

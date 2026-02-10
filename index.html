@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sathil Hotel - Luxury & Comfort</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#D4AF37',
+                            500: '#C5A028',
+                            600: '#B08D1E',
+                        },
+                        dark: {
+                            900: '#0F172A', // Slate 900
+                            800: '#1E293B',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Poppins"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="text-3xl font-serif font-bold text-white tracking-wider">SATHIL</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-white hover:text-gold-400 transition-colors font-medium">Home</a>
+                    <a href="rooms.html" class="text-white hover:text-gold-400 transition-colors font-medium">Rooms</a>
+                    <a href="dining.html"
+                        class="text-white hover:text-gold-400 transition-colors font-medium">Dining</a>
+                    <a href="contact.html"
+                        class="text-white hover:text-gold-400 transition-colors font-medium">Contact</a>
+                    <a href="booking.html"
+                        class="bg-gold-500 hover:bg-gold-600 text-white px-6 py-2 rounded-full transition-colors font-medium shadow-lg">Book
+                        Now</a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button class="mobile-menu-button text-white hover:text-gold-400 focus:outline-none">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu hidden md:hidden bg-dark-900 absolute w-full left-0 top-20 shadow-xl">
+            <a href="index.html"
+                class="block py-4 px-6 text-sm hover:bg-dark-800 text-white border-b border-gray-700">Home</a>
+            <a href="rooms.html"
+                class="block py-4 px-6 text-sm hover:bg-dark-800 text-white border-b border-gray-700">Rooms</a>
+            <a href="dining.html"
+                class="block py-4 px-6 text-sm hover:bg-dark-800 text-white border-b border-gray-700">Dining</a>
+            <a href="contact.html"
+                class="block py-4 px-6 text-sm hover:bg-dark-800 text-white border-b border-gray-700">Contact</a>
+            <a href="booking.html" class="block py-4 px-6 text-sm bg-gold-500 text-white font-bold text-center">Book
+                Now</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center hero-bg">
+        <div class="text-center px-4 fade-in-up">
+            <h2 class="text-gold-400 font-serif text-xl md:text-2xl mb-4 tracking-[0.2em] uppercase">Welcome to Paradise
+            </h2>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-8 text-shadow leading-tight">
+                Sathil Hotel
+            </h1>
+            <p class="text-gray-200 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light">
+                Experience the epitome of luxury and comfort in the heart of nature. Your perfect getaway awaits.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="booking.html"
+                    class="bg-gold-500 hover:bg-gold-600 text-white px-8 py-4 rounded-full text-lg font-medium transition-transform hover:scale-105 shadow-xl">
+                    Book Your Stay
+                </a>
+                <a href="rooms.html"
+                    class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-dark-900 px-8 py-4 rounded-full text-lg font-medium transition-all hover:scale-105">
+                    View Rooms
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <div class="absolute -top-4 -left-4 w-24 h-24 bg-gold-100 rounded-tl-3xl -z-10"></div>
+                    <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-gold-100 rounded-br-3xl -z-10"></div>
+                    <img src="images/hotel-interior.jpg" alt="Luxury Interior"
+                        class="rounded-lg shadow-2xl w-full object-cover h-[500px]">
+                </div>
+                <div>
+                    <h3 class="text-gold-500 font-bold uppercase tracking-widest mb-2">About Us</h3>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-dark-900 mb-6">Redefining Luxury
+                        Hospitality</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Nestled in a serene location, Sathil Hotel offers a sanctuary of tranquility and improved
+                        hospitality. We take pride in delivering a unique experience that combines modern luxury with
+                        authentic tradition.
+                    </p>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        Whether you are here for a business trip or a relaxing vacation, our world-class amenities and
+                        dedicated staff ensure your stay is unforgettable.
+                    </p>
+                    <a href="rooms.html"
+                        class="inline-block border-b-2 border-gold-500 text-dark-900 font-medium hover:text-gold-600 pb-1 transition-colors">
+                        Explore Our Rooms &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="text-gold-500 font-bold uppercase tracking-widest mb-2">Our Amenities</h3>
+            <h2 class="text-4xl font-serif font-bold text-dark-900 mb-16">Why Choose Sathil?</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Service 1 -->
+                <div class="bg-white p-10 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow group">
+                    <div
+                        class="w-16 h-16 bg-gold-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gold-500 transition-colors">
+                        <svg class="w-8 h-8 text-gold-600 group-hover:text-white transition-colors" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                            </path>
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-dark-900 mb-4">Luxury Accommodation</h4>
+                    <p class="text-gray-600">Spacious rooms designed with your comfort in mind, featuring premium
+                        bedding and stunning views.</p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-white p-10 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow group">
+                    <div
+                        class="w-16 h-16 bg-gold-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gold-500 transition-colors">
+                        <svg class="w-8 h-8 text-gold-600 group-hover:text-white transition-colors" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                            </path>
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-dark-900 mb-4">World Class Dining</h4>
+                    <p class="text-gray-600">Experience culinary masterpieces prepared by our expert chefs using fresh,
+                        local ingredients.</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-white p-10 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow group">
+                    <div
+                        class="w-16 h-16 bg-gold-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gold-500 transition-colors">
+                        <svg class="w-8 h-8 text-gold-600 group-hover:text-white transition-colors" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-dark-900 mb-4">Spa & Wellness</h4>
+                    <p class="text-gray-600">Rejuvenate your body and mind at our exclusive spa center offering a range
+                        of treatments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <h3 class="text-2xl font-serif font-bold mb-6">SATHIL</h3>
+                    <p class="text-gray-400 text-sm">Experience the art of hospitality at Sathil Hotel. Your comfort is
+                        our priority.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-gold-500">Quick Links</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="rooms.html" class="hover:text-white transition-colors">Rooms</a></li>
+                        <li><a href="dining.html" class="hover:text-white transition-colors">Dining</a></li>
+                        <li><a href="booking.html" class="hover:text-white transition-colors">Booking</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-gold-500">Contact</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li>123 Hotel Road, Colombo</li>
+                        <li>info@sathilhotel.com</li>
+                        <li>+94 11 234 5678</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-gold-500">Newsletter</h4>
+                    <div class="flex">
+                        <input type="email" placeholder="Your Email"
+                            class="bg-dark-800 text-white px-4 py-2 rounded-l-md w-full focus:outline-none focus:ring-1 focus:ring-gold-500">
+                        <button
+                            class="bg-gold-500 px-4 py-2 rounded-r-md hover:bg-gold-600 transition-colors">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
+                &copy; 2024 Sathil Hotel. All Rights Reserved. <a href="admin.html"
+                    class="text-gray-600 hover:text-white ml-4">Admin Login</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

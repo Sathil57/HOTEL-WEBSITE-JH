@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Status - Sathil Hotel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #D4AF37;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .success-checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 2;
+            stroke: #4bb71b;
+            stroke-miterlimit: 10;
+            margin: 10% auto;
+            box-shadow: inset 0px 0px 0px #4bb71b;
+            animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+        }
+
+        @keyframes fill {
+            100% {
+                box-shadow: inset 0px 0px 0px 50px #4bb71b;
+            }
+        }
+
+        @keyframes scale {
+
+            0%,
+            100% {
+                transform: none;
+            }
+
+            50% {
+                transform: scale3d(1.1, 1.1, 1);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 flex items-center justify-center h-screen font-sans">
+
+    <div class="bg-white p-8 md:p-12 rounded-2xl shadow-2xl max-w-md w-full text-center relative overflow-hidden"
+        id="status-card">
+        <!-- Initial Pending State -->
+        <div id="pending-view">
+            <div class="flex justify-center mb-6">
+                <div class="loader"></div>
+            </div>
+            <h2 class="text-2xl font-serif font-bold text-dark-900 mb-2">Booking Pending</h2>
+            <p class="text-gray-500 mb-6">Please wait while our team reviews your request...</p>
+            <div class="bg-yellow-50 text-yellow-800 px-4 py-3 rounded-lg text-sm border border-yellow-200">
+                Current Status: <span class="font-bold">Pending Approval</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-8 mb-4">Keep this window open to see the update instantly.</p>
+            <button onclick="cancelBooking()" class="text-red-500 hover:text-red-700 text-sm underline">Cancel
+                Booking</button>
+        </div>
+
+        <!-- Confirmed State (Hidden) -->
+        <div id="confirmed-view" class="hidden">
+            <div class="flex justify-center mb-6">
+                <svg class="w-24 h-24 text-green-500 animate-bounce" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <h2 class="text-3xl font-serif font-bold text-green-600 mb-2">Booking Confirmed!</h2>
+            <p class="text-gray-600 mb-6">Your stay at Sathil Hotel is confirmed. We can't wait to see you!</p>
+            <a href="index.html"
+                class="bg-dark-900 text-white px-6 py-2 rounded-full hover:bg-gold-500 transition-colors">Back to
+                Home</a>
+            <div class="mt-6">
+                <button onclick="cancelBooking()" class="text-red-500 hover:text-red-700 text-sm underline">Cancel
+                    Booking</button>
+            </div>
+        </div>
+
+        <!-- Rejected State (Hidden) -->
+        <div id="rejected-view" class="hidden">
+            <div class="flex justify-center mb-6">
+                <svg class="w-24 h-24 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-serif font-bold text-red-600 mb-2">Booking Declined</h2>
+            <p class="text-gray-600 mb-6">Unfortunately, we are fully booked for these dates.</p>
+            <a href="booking.html" class="text-gold-500 hover:text-gold-600 font-medium">Try different dates &rarr;</a>
+        </div>
+
+        <!-- Cancelled State (Hidden) -->
+        <div id="cancelled-view" class="hidden">
+            <div class="flex justify-center mb-6">
+                <svg class="w-24 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-serif font-bold text-gray-600 mb-2">Booking Cancelled</h2>
+            <p class="text-gray-500 mb-6">Your booking has been cancelled as requested.</p>
+            <a href="index.html" class="text-gold-500 hover:text-gold-600 font-medium">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        // Check for Booking ID in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookingId = parseInt(urlParams.get('id'));
+
+        if (!bookingId) {
+            document.body.innerHTML = "<div class='text-center p-10 font-bold'>No booking ID found. <br><a href='index.html' class='text-blue-500 underline'>Go Home</a></div>";
+        } else {
+            console.log("Checking status for ID:", bookingId);
+
+            // Polling Logic
+            const interval = setInterval(() => {
+                fetch('http://localhost:3000/api/bookings')
+                    .then(res => res.json())
+                    .then(bookings => {
+                        const booking = bookings.find(b => b.id === bookingId);
+
+                        if (booking) {
+                            if (booking.status === 'Confirmed') {
+                                clearInterval(interval);
+                                document.getElementById('pending-view').classList.add('hidden');
+                                document.getElementById('confirmed-view').classList.remove('hidden');
+                                document.getElementById('confirmed-view').classList.add('fade-in-up');
+                                fireConfetti();
+                            } else if (booking.status === 'Rejected') {
+                                clearInterval(interval);
+                                document.getElementById('pending-view').classList.add('hidden');
+                                document.getElementById('rejected-view').classList.remove('hidden');
+                                document.getElementById('rejected-view').classList.add('fade-in-up');
+                            } else if (booking.status === 'Cancelled') {
+                                clearInterval(interval);
+                                showCancelled();
+                            }
+                        }
+                    })
+                    .catch(console.error);
+            }, 1000);
+        }
+
+        function fireConfetti() {
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInOut(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function () {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInOut(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInOut(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        function showCancelled() {
+            document.getElementById('pending-view').classList.add('hidden');
+            document.getElementById('confirmed-view').classList.add('hidden');
+            document.getElementById('cancelled-view').classList.remove('hidden');
+            document.getElementById('cancelled-view').classList.add('fade-in-up');
+        }
+
+        function cancelBooking() {
+            if (!confirm("Are you sure you want to cancel this booking?")) return;
+
+            fetch(`http://localhost:3000/api/bookings/${bookingId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'Cancelled' })
+            })
+                .then(res => res.json())
+                .then(booking => {
+                    // Send Email to Admin
+                    return fetch("https://formsubmit.co/ajax/shevonsmith28@gmail.com", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            _subject: "Booking Cancelled - Sathil Hotel",
+                            message: `URGENT: Booking has been CANCELLED by customer.\n\nName: ${booking.name}\nRoom: ${booking.room}\nDates: ${booking.checkIn} to ${booking.checkOut}\n\nRunning ID: ${booking.id}`
+                        })
+                    });
+                })
+                .then(() => {
+                    alert('Booking cancelled successfully.');
+                    showCancelled();
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Something went wrong. Is the server running?');
+                    showCancelled();
+                });
+        }
+    </script>
+</body>
+
+</html>

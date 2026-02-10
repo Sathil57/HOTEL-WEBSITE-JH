@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Sathil Hotel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: { 400: '#D4AF37', 500: '#C5A028', 600: '#B08D1E' },
+                        dark: { 900: '#0F172A', 800: '#1E293B' }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Poppins"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+    <!-- Sidebar -->
+    <div class="flex h-screen overflow-hidden">
+        <aside class="w-64 bg-dark-900 text-white flex flex-col">
+            <div class="h-20 flex items-center justify-center border-b border-gray-700">
+                <h1 class="text-2xl font-serif font-bold tracking-wider text-gold-500">SATHIL ADMIN</h1>
+            </div>
+            <nav class="flex-1 py-6">
+                <a href="#" class="block py-3 px-6 bg-dark-800 border-l-4 border-gold-500 text-white">Dashboard</a>
+                <a href="index.html"
+                    class="block py-3 px-6 text-gray-400 hover:bg-dark-800 hover:text-white transition-colors">View
+                    Website</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-100 p-8">
+            <h2 class="text-3xl font-bold text-dark-900 mb-8">Booking Management</h2>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-blue-500">
+                    <h3 class="text-gray-500 text-sm font-medium">Total Bookings</h3>
+                    <p class="text-3xl font-bold text-dark-900" id="total-bookings">0</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-yellow-500">
+                    <h3 class="text-gray-500 text-sm font-medium">Pending</h3>
+                    <p class="text-3xl font-bold text-dark-900" id="pending-bookings">0</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-green-500">
+                    <h3 class="text-gray-500 text-sm font-medium">Confirmed</h3>
+                    <p class="text-3xl font-bold text-dark-900" id="confirmed-bookings">0</p>
+                </div>
+            </div>
+
+            <!-- Booking Table -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 bg-white flex justify-between items-center">
+                    <h3 class="text-lg font-bold text-dark-900">Recent Bookings</h3>
+                    <button onclick="clearAllBookings()"
+                        class="text-red-500 hover:text-red-700 text-sm font-medium">Clear All Data</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-600 text-sm uppercase tracking-wider">
+                                <th class="px-6 py-3 font-medium">Date</th>
+                                <th class="px-6 py-3 font-medium">Guest Name</th>
+                                <th class="px-6 py-3 font-medium">Room</th>
+                                <th class="px-6 py-3 font-medium">Stay Dates</th>
+                                <th class="px-6 py-3 font-medium">Status</th>
+                                <th class="px-6 py-3 font-medium text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="booking-table-body" class="divide-y divide-gray-200">
+                            <!-- Rows will be populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="no-bookings-msg" class="p-8 text-center text-gray-500 hidden">
+                    No bookings found yet. Go to the booking page and make a reservation!
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Internal script for Admin logic specifically
+        document.addEventListener('DOMContentLoaded', loadBookings);
+
+        function loadBookings() {
+            fetch('http://localhost:3000/api/bookings')
+                .then(res => res.json())
+                .then(bookings => {
+                    const tableBody = document.getElementById('booking-table-body');
+                    const noMsg = document.getElementById('no-bookings-msg');
+
+                    // Update Stats
+                    document.getElementById('total-bookings').innerText = bookings.length;
+                    document.getElementById('pending-bookings').innerText = bookings.filter(b => b.status === 'Pending').length;
+                    document.getElementById('confirmed-bookings').innerText = bookings.filter(b => b.status === 'Confirmed').length;
+
+                    tableBody.innerHTML = '';
+
+                    if (bookings.length === 0) {
+                        noMsg.classList.remove('hidden');
+                        return;
+                    } else {
+                        noMsg.classList.add('hidden');
+                    }
+
+                    // Sort by newest first
+                    bookings.reverse().forEach((booking, index) => {
+                        const tr = document.createElement('tr');
+                        tr.className = "hover:bg-gray-50 transition-colors";
+
+                        let statusColor = 'bg-yellow-100 text-yellow-800';
+                        if (booking.status === 'Confirmed') statusColor = 'bg-green-100 text-green-800';
+                        if (booking.status === 'Rejected') statusColor = 'bg-red-100 text-red-800';
+                        if (booking.status === 'Cancelled') statusColor = 'bg-gray-100 text-gray-800';
+
+                        tr.innerHTML = `
+                        <td class="px-6 py-4 text-sm text-gray-500">${new Date(booking.timestamp).toLocaleDateString()}</td>
+                        <td class="px-6 py-4">
+                            <div class="text-sm font-medium text-dark-900">${booking.name}</div>
+                            <div class="text-sm text-gray-500">${booking.email}</div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-700 capitalize">${booking.room.replace('-', ' ')}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">
+                            ${booking.checkIn} to ${booking.checkOut}
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColor}">
+                                ${booking.status}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-right text-sm font-medium space-x-2">
+                            ${booking.status === 'Pending' ? `
+                                <button onclick="updateStatus(${booking.id}, 'Confirmed', '${booking.email}', '${booking.name}', '${booking.room}')" class="text-green-600 hover:text-green-900 bg-green-50 px-3 py-1 rounded border border-green-200">Accept</button>
+                                <button onclick="updateStatus(${booking.id}, 'Rejected', '${booking.email}', '${booking.name}', '')" class="text-red-600 hover:text-red-900 bg-red-50 px-3 py-1 rounded border border-red-200">Reject</button>
+                            ` : '<span class="text-gray-400">Completed</span>'}
+                        </td>
+                    `;
+                        tableBody.appendChild(tr);
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById('no-bookings-msg').innerText = "Error connecting to server. Is it running?";
+                    document.getElementById('no-bookings-msg').classList.remove('hidden');
+                });
+        }
+
+        function updateStatus(id, newStatus, email, name, room) {
+            fetch(`http://localhost:3000/api/bookings/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    loadBookings();
+
+                    // Send Email to Customer Logic
+                    if (newStatus === 'Confirmed') {
+                        const subject = encodeURIComponent("Booking Confirmed - Sathil Hotel");
+                        const body = encodeURIComponent(`Dear ${name},\n\nWe are pleased to confirm your booking for ${room} at Sathil Hotel!\n\nWe look forward to welcoming you.\n\nBest Regards,\nSathil Hotel Team`);
+
+                        setTimeout(() => {
+                            if (confirm(`Booking Accepted for ${name}!\n\nDo you want to send them a confirmation email now?`)) {
+                                window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+                            }
+                        }, 100);
+                    } else if (newStatus === 'Rejected') {
+                        const subject = encodeURIComponent("Update regarding your booking - Sathil Hotel");
+                        const body = encodeURIComponent(`Dear ${name},\n\nThank you for your interest in Sathil Hotel. Unfortunately, we are fully booked for the requested dates.\n\nBest Regards,\nSathil Hotel Team`);
+
+                        setTimeout(() => {
+                            if (confirm(`Booking Rejected.\n\nSend apology email to ${name}?`)) {
+                                window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+                            }
+                        }, 100);
+                    }
+                });
+        }
+
+        function clearAllBookings() {
+            if (confirm('Are you sure you want to delete all bookings?')) {
+                localStorage.removeItem('sathil_bookings');
+                loadBookings();
+            }
+        }
+    </script>
+</body>
+
+</html>

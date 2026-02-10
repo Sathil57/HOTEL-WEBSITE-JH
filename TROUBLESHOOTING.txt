@@ -1,0 +1,31 @@
+READ ME - IMPORTANT FIXES
+========================
+
+ISSUE 1: EMAILS NOT ARRIVING
+---------------------------
+When you host the website on a new link (like GitHub Pages) or open it on a phone, "FormSubmit" (the email service) sees it as a NEW website.
+
+1. Go to your email: shevonsmith28@gmail.com
+2. Check your **Inbox** AND **Spam Folder**.
+3. Look for an email from "FormSubmit".
+4. Click the **ACTIVATE** button inside that email.
+   * If you don’t do this, emails will NOT come.
+
+ISSUE 2: ADMIN PAGE EMPTY
+------------------------
+You asked specifically **NOT** to use a Server (Node.js). I built this using "Local Storage".
+* **Local Storage** means data is saved **Inside the Browser** of the device you are using.
+* If you book on your **Phone**, the data is saved on your **Phone**.
+* Your **Computer** cannot see what is inside your Phone's storage.
+* That is why the Admin Page on your Computer is empty.
+
+SOLUTION
+--------
+Your **EMAIL** is the main way to receive bookings remotely.
+The Admin Page is currently only for managing bookings made on *that specific device*.
+
+If you want the Admin Page to sync across all devices, we need to connect a Cloud Database like **Firebase**. This is more advanced but I can do it if you really want (it requires setting up a Google Project).
+
+For now:
+1. Activate the Email (Step 1 above).
+2. Rely on Emails for remote bookings.
